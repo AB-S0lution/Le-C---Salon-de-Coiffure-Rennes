@@ -1,13 +1,15 @@
 import { boot, planityBtn } from '../core/shell'
 import { chair, headProfile, tree, bottle, scissors, strand } from '../core/art'
 import { initDrawOnView } from '../core/motion'
-import { phead, ctaBand } from '../core/ui'
+import { phead, ctaBand, photoThumb } from '../core/ui'
+import { photo } from '../data/photos'
 import { u } from '../core/dom'
 import { ritual, booking, sevenJours } from '../data'
 
 function render(): string {
   const vigs = [headProfile(), chair(), tree(), bottle(), scissors(), strand([['#4a3426', '#a97b52', '#e1bf8a']], 0.2, 9, 'long', 'rit2')]
-  const steps = ritual.map((s, i) => `<article class="cell" data-reveal><div style="max-width:180px;height:150px;color:var(--fg)">${vigs[i]}</div>
+  const pics: Record<string, string> = { diagnostic: 'longueurs-de-dos', shampooing: 'coupe-en-cours', massant: 'bacs-lavage', soin: 'flacons-pierre', coupe: 'ciseaux-peigne', coiffage: 'brushing-brosse-ronde' }
+  const steps = ritual.map((s, i) => `<article class="cell step-card" data-reveal>${photoThumb(photo(pics[s.id] ?? 'coupe-en-cours'))}<div class="vig">${vigs[i]}</div>
     <div><h3>${s.name}</h3><p class="muted" style="margin-top:.5em">${s.line}</p></div>${s.quote ? `<blockquote style="margin:0"><p style="font-size:1.15rem">« ${s.quote.text} »</p><cite style="font-style:normal;font-size:.85rem" class="muted">${s.quote.source}</cite></blockquote>` : ''}</article>`).join('')
   return `
 ${phead({ title: 'Le Rituel, <em>étape par étape.</em>', lead: 'Chaque forfait suit le même chemin : un diagnostic, un shampooing traitant, un rituel massant, un soin, la coupe et le coiffage.', crumb: 'Le Rituel' })}

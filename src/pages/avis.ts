@@ -1,5 +1,6 @@
 import { boot, planityBtn } from '../core/shell'
-import { phead, quote } from '../core/ui'
+import { phead, quote, photoSlim } from '../core/ui'
+import { photo } from '../data/photos'
 import { esc, qs, qsa } from '../core/dom'
 import { business, ratings, displayReviews, themeLabels, type Theme } from '../data'
 
@@ -9,6 +10,7 @@ function render(): string {
   const p = business.planity
   return `
 ${phead({ title: 'Ce que disent <em>les clientes.</em>', lead: `${fr(p.rating)} sur 5 sur Planity, d’après ${p.reviews} avis (relevé du ${p.checkedAt}). Voici une sélection d’avis réels, cités tels quels.`, crumb: 'Avis' })}
+${photoSlim(photo('fauteuils-comptoir'), '50% 60%')}
 <section class="section" style="padding-top:0"><div class="wrap">
   <div class="facts" style="margin-bottom:3rem">
     <div class="fact"><h3 class="num">${fr(p.rating)} / 5</h3><p>Note Planity, ${p.reviews} avis</p></div>

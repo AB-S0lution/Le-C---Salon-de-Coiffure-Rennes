@@ -1,6 +1,6 @@
 import { boot } from '../core/shell'
 import { vignette } from '../core/art'
-import { phead, ctaBand, postCard } from '../core/ui'
+import { phead, ctaBand, postCard, photoFig, photoFor } from '../core/ui'
 import { u, fmtLongDate } from '../core/dom'
 import { posts } from '../data'
 
@@ -15,6 +15,7 @@ function render(): string {
 ${phead({ title: post.title, lead: post.excerpt, crumb: `<a href="${u('journal/')}">Journal</a> / ${post.category}`, art: vignette(post.art), eyebrow: `${post.category}, ${post.readingMin} min de lecture` })}
 <article class="section" style="padding-top:0"><div class="wrap">
   <p class="sample-note">Article d’exemple, publié le ${fmtLongDate(post.date)}. Les tarifs et durées cités viennent de la carte Planity ; le reste est un conseil général.</p>
+  ${photoFig(photoFor(post.slug), 'wide cover', 0, true)}
   <div class="prose">${post.body.map((b) => `<p data-reveal>${b}</p>`).join('')}</div>
   <p class="tags" style="margin-top:1.6rem">${post.tags.map((t) => `<span>${t}</span>`).join('')}</p>
   <h2 style="font-size:1.8rem;margin-top:3rem">À lire ensuite sur le site</h2>

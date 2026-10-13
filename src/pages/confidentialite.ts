@@ -1,9 +1,11 @@
 import { boot } from '../core/shell'
-import { phead } from '../core/ui'
+import { phead, photoSlim } from '../core/ui'
+import { photo } from '../data/photos'
 
 function render(): string {
   return `
 ${phead({ title: 'Confidentialité, <em>sans cookies.</em>', crumb: 'Confidentialité' })}
+${photoSlim(photo('galerie-poutres'), '50% 40%')}
 <section class="section" style="padding-top:0"><div class="wrap legal">
   <h2>Aucun cookie, aucun traceur</h2>
   <p>Ce site ne dépose aucun cookie, n’intègre aucun outil de mesure d’audience, aucune carte interactive ni aucun service tiers au chargement. Les polices sont servies depuis le site lui-même.</p>

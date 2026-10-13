@@ -53,3 +53,13 @@ export function photoImg(ph: Photo, eager = false): string {
 export function photoFig(ph: Photo, cls = '', d = 0, eager = false): string {
   return `<figure class="pfig ${cls}" data-reveal${d ? ` style="--d:${d}"` : ''}><div class="pfig-img">${photoImg(ph, eager)}</div><figcaption>Photo d’illustration, <a href="${ph.url}" target="_blank" rel="noopener noreferrer">${ph.credit}</a></figcaption></figure>`
 }
+
+/** Slim full-width photo band (FAQ, legal, avis...): one wide illustration with its caption. */
+export function photoSlim(ph: Photo, pos = '50% 50%'): string {
+  return `<section class="pslim-sec" aria-label="Photo d’illustration"><div class="wrap">${photoFig(ph, 'slim').replace('<img ', `<img style="object-position:${pos}" `)}</div></section>`
+}
+
+/** Card thumbnail: photo with the « Photo d'illustration » pill (no link, decorative frame). */
+export function photoThumb(ph: Photo, cls = ''): string {
+  return `<div class="thumb ph ${cls}">${photoImg(ph)}<span class="ph-tag">Photo d’illustration</span></div>`
+}

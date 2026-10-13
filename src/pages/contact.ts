@@ -1,6 +1,7 @@
 import { boot, planityBtn } from '../core/shell'
 import { facade } from '../core/art'
-import { phead } from '../core/ui'
+import { phead, photoFig } from '../core/ui'
+import { photo } from '../data/photos'
 import { hoursRows } from './_hours'
 import { business, hours, access } from '../data'
 
@@ -32,10 +33,20 @@ ${phead({ title: 'Nous <em>trouver.</em>', lead: 'Au cœur du vieux Rennes, à q
   </div>
 </div></section>
 
+<section class="section" style="padding-top:0" aria-labelledby="amb-h"><div class="wrap">
+  <h2 id="amb-h" class="sr">Ambiance, photos d’illustration</h2>
+  <div class="pband">
+    ${photoFig(photo('maison-pans-de-bois'), 'wide')}
+    ${photoFig(photo('fauteuils-miroirs-ronds'), 'arch tall', 1)}
+    ${photoFig(photo('galerie-poutres'), 'tall', 2)}
+  </div>
+  <p class="muted" style="margin-top:1rem;font-size:.92rem" data-reveal>Photos d’illustration (Unsplash) : elles évoquent les maisons anciennes et l’esprit du salon, elles ne montrent pas le 3 rue du Chapitre.</p>
+</div></section>
+
 <section class="section" style="background:var(--bg-2)" aria-labelledby="ac-h"><div class="wrap">
   <h2 id="ac-h" data-split>Venir au salon.</h2>
   <p class="muted" style="margin:1rem 0 1.6rem;max-width:68ch">Distances mesurées en ligne droite sur OpenStreetMap depuis le point GPS de Planity (octobre 2026). À pied, comptez un peu plus : quelques minutes.</p>
-  <div class="bento">${kinds}</div>
+  <div class="bento cards">${kinds}</div>
 </div></section>
 
 <section class="section" aria-labelledby="pr-h"><div class="wrap split">

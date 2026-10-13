@@ -9,6 +9,8 @@ import { spriteDefs, hexBg } from './art'
 import { u, typo, qs, qsa, reduceMotion, finePointer } from './dom'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
+// Mobile URL-bar show/hide must not trigger a full refresh (jumps pinned sections on phones).
+ScrollTrigger.config({ ignoreMobileResize: true })
 
 export type PageKey =
   | 'home' | 'maison' | 'carte' | 'couleur' | 'soins' | 'rituel' | 'equipe' | 'realisations' | 'boutique' | 'avis'
@@ -195,6 +197,18 @@ export function setupReveals(root: ParentNode = document): void {
     for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) }
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
   els.forEach((el) => io.observe(el))
+  // Fail-safe: content is only hidden under .js-motion; if the observer never fires (old engine,
+  // throttled tab, anchor jump), reveal what is already on or above screen, then everything.
+  const revealPast = () => qsa('[data-reveal]:not(.in)', root).forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) el.classList.add('in') })
+  setTimeout(revealPast, 2500)
+  setTimeout(() => qsa('[data-reveal]:not(.in)', root).forEach((el) => el.classList.add('in')), 9000)
+}
+
+/** Pause CSS loops (marquee, hotspot pings, petals) while they are off screen. */
+function pauseOffscreenLoops(): void {
+  if (!('IntersectionObserver' in window)) return
+  const io = new IntersectionObserver((entries) => { for (const en of entries) en.target.classList.toggle('is-off', !en.isIntersecting) }, { rootMargin: '120px 0px' })
+  qsa('.marquee, .room, .swipe-hint').forEach((el) => io.observe(el))
 }
 
 export function splitHeadings(root: ParentNode = document): void {
@@ -242,7 +256,7 @@ export function boot(opts: BootOptions): void {
   if (ftr) ftr.style.setProperty('--hex', hexBg('#BA936D', 0.38))
   setupTheme(); setupMenu(); setupButtons(); setupFoil(); setupSmooth()
   const mainEl = document.getElementById('main')!
-  setupReveals(); splitHeadings(); setupOpenNow()
+  setupReveals(); splitHeadings(); setupOpenNow(); pauseOffscreenLoops()
   opts.init?.(mainEl)
   document.documentElement.classList.add('lec-ready')
   window.addEventListener('load', () => ScrollTrigger.refresh())

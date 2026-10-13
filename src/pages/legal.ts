@@ -1,5 +1,6 @@
 import { boot } from '../core/shell'
-import { phead } from '../core/ui'
+import { phead, photoSlim } from '../core/ui'
+import { photo } from '../data/photos'
 import { eur } from '../core/dom'
 import { business } from '../data'
 
@@ -7,6 +8,7 @@ function render(): string {
   const l = business.legal, a = business.address
   return `
 ${phead({ title: 'Mentions <em>légales.</em>', crumb: 'Mentions légales' })}
+${photoSlim(photo('facade-colombages'), '50% 30%')}
 <section class="section" style="padding-top:0"><div class="wrap legal">
   <p class="sample-note">Ce site est une maquette de démonstration réalisée sans commande du salon. Il n’est pas le site officiel de ${business.fullName}.</p>
   <h2>Le salon présenté</h2>

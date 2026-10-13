@@ -57,6 +57,10 @@ export const photos: Photo[] = [
   p('longueurs-de-dos', 'Longs cheveux vus de dos', 'couleur', 1100, 1955, '1710527988568-3040fd125358'),
   p('cheveux-noir-et-blanc', 'Chevelure en noir et blanc', 'couleur', 1400, 894, '1675785782005-875e1523de4c'),
   p('texture-brune', 'Texture de cheveux bruns sur fond noir', 'couleur', 1400, 2100, '1774876379962-e39b8ac20b95'),
+  p('maison-pans-de-bois', 'Maison à pans de bois et volets bleus au bord d’une rue pavée (pas le salon)', 'lieu', 1200, 1800, '1604040427842-0bdb35676f66'),
+  p('facade-colombages', 'Façade ancienne à colombages noirs et blancs sous un ciel nuageux (pas le salon)', 'lieu', 1200, 1500, '1621943413171-bb02e7f1ea18'),
+  p('galerie-poutres', 'Galerie couverte aux poutres de bois apparentes et murs blancs', 'lieu', 1200, 800, '1649056325447-72874fa7db56'),
+  p('flacon-huile', 'Flacon d’huile sombre sans marque posé près de feuilles vertes', 'soins', 1200, 800, '1699373381616-6133334e754e'),
 ]
 
 export const photoTagLabel: Record<PhotoTag, string> = { lieu: 'Le lieu', atelier: 'À l’atelier', outils: 'Les outils', couleur: 'Couleur et matière', soins: 'Soins' }

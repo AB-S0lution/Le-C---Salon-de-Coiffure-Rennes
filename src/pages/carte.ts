@@ -14,9 +14,9 @@ function lengthTable(c: 'Balayages Naturels' | 'Blonds Ultimes', intro: string, 
   const rows = lengths.map((l) => {
     const a = services.find((s) => s.category === c && s.length === l.key && s.withCut === false)!
     const b = services.find((s) => s.category === c && s.length === l.key && s.withCut === true)!
-    return `<tr><td><strong>${l.label}</strong><br><span class="muted" style="font-size:.88rem">${l.definition}</span></td><td class="pz num">${eur(a.priceEUR)} <span class="muted" style="font-family:var(--font-body);font-size:.85rem">${duration(a.durationMin)}</span></td><td class="pz num">${eur(b.priceEUR)} <span class="muted" style="font-family:var(--font-body);font-size:.85rem">${duration(b.durationMin)}</span></td></tr>`
+    return `<tr><td><strong>${l.label}</strong><br><span class="muted" style="font-size:.88rem">${l.definition}</span></td><td class="pz num" data-label="Avec brushing">${eur(a.priceEUR)} <span class="muted" style="font-family:var(--font-body);font-size:.85rem">${duration(a.durationMin)}</span></td><td class="pz num" data-label="Avec coupe et brushing">${eur(b.priceEUR)} <span class="muted" style="font-family:var(--font-body);font-size:.85rem">${duration(b.durationMin)}</span></td></tr>`
   }).join('')
-  return `<div class="pgroup" id="${id}" data-reveal style="grid-column:1/-1"><h3>${c}</h3><p class="sub">${intro}</p><div class="table-wrap"><table class="grid"><thead><tr><th scope="col">Longueur</th><th scope="col">Avec brushing</th><th scope="col">Avec coupe et brushing</th></tr></thead><tbody>${rows}</tbody></table></div></div>`
+  return `<div class="pgroup" id="${id}" data-reveal style="grid-column:1/-1"><h3>${c}</h3><p class="sub">${intro}</p><div class="table-wrap"><table class="grid stack"><thead><tr><th scope="col">Longueur</th><th scope="col">Avec brushing</th><th scope="col">Avec coupe et brushing</th></tr></thead><tbody>${rows}</tbody></table></div></div>`
 }
 
 function render(): string {
@@ -29,7 +29,7 @@ ${phead({ title: 'Carte & <em>tarifs.</em>', lead: 'Les prix publics du salon su
   ${gaugeHTML()}
 </div></section>
 
-<section class="section" style="padding-block:clamp(24px,4vw,48px)" aria-label="Photos d’illustration des outils du salon"><div class="wrap"><div class="pstrip" tabindex="0" aria-label="Outils du métier, photos d’illustration">${[...byTag('outils'), ...byTag('atelier')].map((x, i) => photoFig(x, i % 3 === 0 ? 'arch' : '', i % 4)).join('')}</div></div></section>
+<section class="section" style="padding-block:clamp(24px,4vw,48px)" aria-label="Photos d’illustration des outils du salon"><div class="wrap"><p class="swipe-hint" aria-hidden="true">Faites glisser</p><div class="pstrip" tabindex="0" aria-label="Outils du métier, photos d’illustration">${[...byTag('outils'), ...byTag('atelier')].map((x, i) => photoFig(x, i % 3 === 0 ? 'arch' : '', i % 4)).join('')}</div></div></section>
 
 <section class="section" aria-labelledby="car-h"><div class="wrap">
   <h2 id="car-h" data-split style="margin-bottom:.6em">Toute la carte.</h2>

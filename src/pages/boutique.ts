@@ -1,11 +1,24 @@
 import { boot } from '../core/shell'
 import { bottle } from '../core/art'
-import { phead, ctaBand } from '../core/ui'
+import { phead, ctaBand, photoThumb, photoFor } from '../core/ui'
+import { photo, type Photo } from '../data/photos'
 import { eur, esc, qs, qsa } from '../core/dom'
 import { products, productTypes, type Product } from '../data'
 
+const pool: Record<Product['type'], string[]> = {
+  Shampooing: ['produits-capillaires', 'flacons-pierre', 'flacon-huile'],
+  Soin: ['ciseaux-flacon-ambre', 'flacon-huile', 'feuillage'],
+  Masque: ['feuillage', 'flacons-pierre'],
+  Huile: ['flacon-huile', 'produits-capillaires'],
+  Coiffant: ['outils-ardoise', 'brosse', 'seche-cheveux-lin'],
+  Accessoire: ['brosse', 'seche-cheveux-peigne', 'ciseaux-bois', 'outils-ardoise'],
+  Coffret: ['flacons-pierre', 'ciseaux-flacon-ambre'],
+  Vrac: ['flacons-pierre', 'produits-capillaires', 'flacon-huile'],
+}
+const pic = (p: Product): Photo => photoFor(p.id, pool[p.type].map(photo))
+
 function card(p: Product): string {
-  return `<article class="prod" data-type="${p.type}" data-q="${esc((p.name + ' ' + p.hair + ' ' + p.tags.join(' ')).toLowerCase())}">
+  return `<article class="prod" data-type="${p.type}" data-q="${esc((p.name + ' ' + p.hair + ' ' + p.tags.join(' ')).toLowerCase())}">${photoThumb(pic(p))}
   <p class="t">${p.type}, ${p.hair}</p><h3>${p.name}</h3>
   ${p.desc ? `<p class="muted" style="margin:0">${p.desc}</p>` : ''}
   <div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join('')}${p.real ? '' : '<span>exemple</span>'}</div>

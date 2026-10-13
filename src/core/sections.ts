@@ -36,7 +36,7 @@ export function nuancierHTML(opts: { title?: string; lead?: string } = {}): stri
   return `<section class="nuancier" id="nuancier" aria-labelledby="nu-h"><div class="nu-pin">
   <div class="head wrap"><p class="eyebrow">La Couleur</p><h2 id="nu-h" data-split style="max-width:20ch">${opts.title ?? 'Des nuances qui s’éclaircissent racine à pointe.'}</h2>
   <p class="lead" data-reveal style="margin-top:1rem">${opts.lead ?? 'Du balayage effet soleil au violine intense : les tons nommés par le salon, et quelques nuances d’exemple.'}</p></div>
-  <div class="nu-track" tabindex="0" aria-label="Nuancier, faites défiler horizontalement">${nuancier.map(swatchHTML).join('')}</div>
+  <p class="swipe-hint nu-swipe wrap" aria-hidden="true">Faites glisser le nuancier</p><div class="nu-track" tabindex="0" aria-label="Nuancier, faites défiler horizontalement">${nuancier.map(swatchHTML).join('')}</div>
 </div></section>`
 }
 

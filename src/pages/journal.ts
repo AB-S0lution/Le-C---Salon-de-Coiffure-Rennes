@@ -1,6 +1,7 @@
 import { boot } from '../core/shell'
 import { scissors } from '../core/art'
-import { phead, postCard } from '../core/ui'
+import { phead, postCard, photoThumb, photoFor } from '../core/ui'
+import { photos } from '../data/photos'
 import { esc, qs, qsa } from '../core/dom'
 import { posts, postCategories, events } from '../data'
 
@@ -20,7 +21,7 @@ ${phead({ title: 'Le Journal <em>du salon.</em>', lead: 'Des conseils de couleur
 <section class="section" style="background:var(--bg-2)" aria-labelledby="ev-h"><div class="wrap">
   <h2 id="ev-h" data-split>Idées et rendez-vous à l’étude.</h2>
   <p class="sample-note" style="margin-top:1rem">Aucune date n’est annoncée par le salon. Ce sont des idées d’exemple.</p>
-  <div class="bento" style="margin-top:1.4rem">${events.map((e) => `<div class="cell" data-reveal><p class="eyebrow">${e.season}</p><h3>${e.title}</h3><p class="muted">${e.text}</p></div>`).join('')}</div>
+  <div class="bento cards" style="margin-top:1.4rem">${events.map((e) => `<div class="cell" data-reveal>${photoThumb(photoFor(e.title, photos.filter((x) => x.tag !== 'lieu')), 'wide')}<p class="eyebrow">${e.season}</p><h3>${e.title}</h3><p class="muted">${e.text}</p></div>`).join('')}</div>
 </div></section>
 
 <section class="section" aria-labelledby="nl-h"><div class="wrap" style="max-width:640px">

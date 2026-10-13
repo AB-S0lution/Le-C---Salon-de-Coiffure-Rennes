@@ -1,4 +1,4 @@
-import { boot, planityBtn } from '../core/shell'
+import { boot, planityBtn, ARROW } from '../core/shell'
 import { facade } from '../core/art'
 import { gaugeHTML, mountGauge } from '../core/gauge'
 import { ritualHTML, nuancierHTML, houseTrio } from '../core/sections'
@@ -19,7 +19,7 @@ function render(): string {
   <div>
     <h1 id="h1" data-split>Coiffeur coloriste, <em>rue du Chapitre.</em></h1>
     <p class="lead" data-reveal>Diagnostic, rituel massant et couleur sur mesure, dans une maison médiévale du vieux Rennes.</p>
-    <div class="btns" data-reveal style="--d:2">${planityBtn()}<a class="btn ghost" href="${u('carte/')}">Voir la carte</a></div>
+    <div class="btns" data-reveal style="--d:2">${planityBtn()}<a class="btn ghost" href="${u('carte/')}">Voir la carte${ARROW}</a></div>
   </div>
   <div class="hero-art" aria-label="Gravure de la façade du salon, avec ses couleurs">
     ${facade('brush')}${facade('col')}${facade('ink')}<div class="shine"></div>
@@ -84,7 +84,7 @@ ${nuancierHTML()}
   <p class="eyebrow">Matières et nuances</p>
   <h2 id="pst-h" data-split style="margin-bottom:.4em">Du cuivré au poivre et sel.</h2>
   <p class="muted" data-reveal style="margin-bottom:clamp(20px,3vw,32px)">Photos d’illustration (Unsplash), pas des réalisations du salon. Faites défiler.</p>
-  <div class="pstrip" tabindex="0" aria-label="Galerie de photos d’illustration, défilement horizontal">${photos.filter((x) => x.tag === 'couleur' || x.tag === 'soins').map((x, i) => photoFig(x, i % 3 === 0 ? 'arch' : '', i % 4)).join('')}</div>
+  <p class="swipe-hint" aria-hidden="true">Faites glisser</p><div class="pstrip" tabindex="0" aria-label="Galerie de photos d’illustration, défilement horizontal">${photos.filter((x) => x.tag === 'couleur' || x.tag === 'soins').map((x, i) => photoFig(x, i % 3 === 0 ? 'arch' : '', i % 4)).join('')}</div>
   <p style="margin-top:24px" data-reveal><a class="ul" href="${u('realisations/#photos')}">Toutes les photos</a></p>
 </div></section>
 
