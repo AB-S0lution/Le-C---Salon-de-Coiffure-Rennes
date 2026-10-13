@@ -589,3 +589,13 @@ table.grid td.pz { font-family: var(--font-display); font-size: 1.4rem; white-sp
 .pgrid .pfig:nth-child(5n+1) .pfig-img { border-radius: 999px 999px 0 0; }
 .photo-filters { margin-bottom: 1.4rem; }
 .svc-photos { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); margin-top: 2rem; }
+
+/* Phone pass: 44px tap targets, even hero buttons */
+@media (max-width: 640px) {
+  .brand { display: inline-flex; align-items: center; min-height: 44px; }
+  .btn.small, .hdr .btn { min-height: 44px; }
+  .chip, .tabs button { min-height: 44px; }
+  .sitemap a { padding: 10px 0; }
+  .hero .btns { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .hero .btns .btn { width: 100%; justify-content: center; }
+}
