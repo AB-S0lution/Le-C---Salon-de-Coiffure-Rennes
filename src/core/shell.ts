@@ -193,13 +193,22 @@ export function scrollToTarget(el: HTMLElement): void { if (lenis) lenis.scrollT
 export function setupReveals(root: ParentNode = document): void {
   const els = qsa('[data-reveal]', root)
   if (!els.length) return
+  const show = (el: Element) => {
+    // items of a horizontal strip come in together, so off-screen cards are never left blank after a swipe
+    const strip = el.parentElement?.closest('.pstrip')
+    const group = strip ? qsa('[data-reveal]:not(.in)', strip) : [el]
+    group.forEach((g) => { g.classList.add('in'); io.unobserve(g) })
+  }
   const io = new IntersectionObserver((entries) => {
-    for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) }
+    for (const en of entries) if (en.isIntersecting) show(en.target)
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
   els.forEach((el) => io.observe(el))
   // Fail-safe: content is only hidden under .js-motion; if the observer never fires (old engine,
-  // throttled tab, anchor jump), reveal what is already on or above screen, then everything.
-  const revealPast = () => qsa('[data-reveal]:not(.in)', root).forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) el.classList.add('in') })
+  // throttled tab, anchor jump, last items that never reach the trigger line at the page end),
+  // reveal what is on or above screen shortly after scrolling stops, then everything.
+  const revealPast = () => qsa('[data-reveal]:not(.in)', root).forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) show(el) })
+  let idle = 0
+  addEventListener('scroll', () => { clearTimeout(idle); idle = window.setTimeout(revealPast, 220) }, { passive: true })
   setTimeout(revealPast, 2500)
   setTimeout(() => qsa('[data-reveal]:not(.in)', root).forEach((el) => el.classList.add('in')), 9000)
 }

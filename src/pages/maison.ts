@@ -9,7 +9,7 @@ import { history, streetFacts, sevenJours, petitFuteQuote, business } from '../d
 
 function render(): string {
   const tl = history.map((h) => `<div class="tl ${h.kind}" data-reveal><div class="when">${h.when}</div><h3>${h.title}</h3><p>${h.text}</p><p class="src">Source : <a href="${h.sourceUrl}" target="_blank" rel="noopener noreferrer">${h.source}</a></p></div>`).join('')
-  const street = streetFacts.map((f) => `<li><span><strong>N° ${f.n}</strong> ${f.text}</span><span class="muted" style="white-space:nowrap">${f.source}</span></li>`).join('')
+  const street = streetFacts.map((f) => `<li><span><strong>N° ${f.n}</strong> ${f.text}</span><span class="muted">${f.source}</span></li>`).join('')
   return `
 ${phead({ title: 'Magali, et la maison de la <em>rue du Chapitre.</em>', lead: 'Un salon ouvert en 2020, dans un ancien hôtel particulier du vieux Rennes. Ici, le temps fait partie de la coiffure.', crumb: 'La Maison' })}
 
@@ -46,7 +46,7 @@ ${roomHTML()}
 <section class="section" style="background:var(--bg-2)" aria-labelledby="ru-h"><div class="wrap">
   <h2 id="ru-h" data-split style="margin-bottom:.5em">La rue du Chapitre.</h2>
   <p class="lead" data-reveal>Autrefois rue du Four au Chapitre, aujourd’hui l’une des plus pittoresques de Rennes, au pied de la cathédrale Saint-Pierre.</p>
-  <ul class="list-plain" style="margin-top:2rem;max-width:900px" data-reveal>${street}</ul>
+  <ul class="list-plain street" style="margin-top:2rem;max-width:900px" data-reveal>${street}</ul>
   <p class="muted" style="margin-top:1.4rem;font-size:.92rem" data-reveal>Le Salon Coiffure Chapitre II, au n° 7, est un autre salon. Le C. est au n° 3.</p>
 </div></section>
 

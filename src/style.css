@@ -386,8 +386,10 @@ html.foil-in .foil i { transform: scaleY(1); }
 .pgroup .pz small { display: block; margin-top: 4px; font-family: var(--font-body); font-size: 0.8rem; color: var(--fg-2); }
 .badge { display: inline-block; font-size: 0.74rem; letter-spacing: 0.04em; padding: 2px 8px; border: 1px solid var(--line); color: var(--fg-2); margin-left: 8px; vertical-align: 2px; white-space: nowrap; }
 .table-wrap { overflow-x: auto; }
-table.grid { width: 100%; border-collapse: collapse; min-width: 520px; }
+/* display: table on purpose: Tailwind's .grid utility (display: grid) would otherwise turn these tables into grids */
+table.grid { display: table; width: 100%; border-collapse: collapse; min-width: 520px; }
 table.grid th { text-align: left; font-weight: 500; color: var(--fg-2); font-size: 0.9rem; padding: 8px 12px 8px 0; }
+.pgroup table.grid th:not(:first-child) { text-align: right; }
 table.grid td { padding: 12px 12px 12px 0; border-top: 1px solid var(--line-soft); vertical-align: baseline; }
 table.grid td.pz { font-family: var(--font-display); font-size: 1.4rem; white-space: nowrap; }
 
@@ -471,6 +473,8 @@ table.grid td.pz { font-family: var(--font-display); font-size: 1.4rem; white-sp
 .fact { padding: 26px 24px 26px 0; }
 .fact + .fact { padding-left: 24px; border-left: 1px solid var(--line-soft); }
 @media (max-width: 700px) { .fact + .fact { padding-left: 0; border-left: 0; border-top: 1px solid var(--line-soft); } }
+/* wrapped rows: no stray divider/indent on the first item of a new row */
+@media (min-width: 701px) { .facts { overflow: hidden; } .fact, .fact + .fact { padding: 26px 24px 26px 25px; margin-left: -25px; border-left: 1px solid var(--line-soft); } }
 .fact h3 { font-size: 1.5rem; margin-bottom: 6px; }
 .fact p { color: var(--fg-2); margin: 0; font-size: 0.97rem; }
 
@@ -649,12 +653,17 @@ p, li, td, dd, figcaption, blockquote { overflow-wrap: break-word; }
 
 /* responsive length tables: stacked cards on phones */
 @media (max-width: 640px) {
-  table.grid.stack { min-width: 0; }
+  table.grid.stack, table.grid.stack tbody { display: block; min-width: 0; }
   table.grid.stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   table.grid.stack tr { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-top: 1px solid var(--line-soft); }
   table.grid.stack td { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 4px 0; border: 0; white-space: normal; }
   table.grid.stack td[data-label]::before { content: attr(data-label); font-family: var(--font-body); font-size: 0.875rem; color: var(--fg-2); }
   table.grid.stack td.pz { flex-wrap: wrap; }
+  /* the price-list rule .pgroup .pz (grid-row/column) must not reach the stacked table cells */
+  table.grid.stack td, .pgroup table.grid.stack td.pz { grid-row: auto; grid-column: auto; text-align: left; justify-content: flex-start; gap: 4px 12px; }
+  table.grid.stack td:first-child { display: block; padding-bottom: 6px; }
+  table.grid.stack td.pz::before { margin-right: auto; align-self: center; }
+  table.grid.stack td.pz > span { min-width: 3.6em; text-align: right; }
 }
 
 /* safe areas: header, menu, footer, room caption */
@@ -667,7 +676,8 @@ p, li, td, dd, figcaption, blockquote { overflow-wrap: break-word; }
 /* touch: 44px targets, readable small text */
 @media (pointer: coarse) {
   .chip, .tabs button, .btn.small, .hdr .btn { min-height: 44px; }
-  .ftr p a, .crumbs a, .sitemap a, .list-plain a, .menu .meta a { display: inline-block; padding-block: 10px; }
+  .ftr p a, .crumbs a, .list-plain a, .menu .meta a { display: inline-block; padding-block: 10px; }
+  .sitemap a { display: block; padding-block: 10px; }
   .ftr .legal-row a { padding-block: 10px; }
   .pfig figcaption a { display: inline-block; padding-block: 8px; }
 }
@@ -702,3 +712,19 @@ p, li, td, dd, figcaption, blockquote { overflow-wrap: break-word; }
 .js-motion .ritual.stacked .step.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .swipe-hint::after { animation: none; } .js-motion .ritual.stacked .step { opacity: 1; transform: none; } }
 .swipe-hint.is-off::after { animation-play-state: paused; }
+
+/* street list (La Maison): source under the text on phones instead of a squeezed column */
+.list-plain.street li > .muted { white-space: nowrap; }
+@media (max-width: 640px) { .list-plain.street li { flex-direction: column; gap: 4px; } .list-plain.street li > .muted { white-space: normal; font-size: 0.875rem; } }
+
+/* phones: photo runs and the illustration gallery in two columns instead of one tall stack */
+@media (max-width: 639px) {
+  .svc-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .svc-photos .pfig.wide .pfig-img { aspect-ratio: 1 / 1; }
+  .gal { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
+  .gcard .pic { padding: 10px 6px 0; }
+  .gcard h3 { font-size: 1.12rem; }
+  .gcard .meta { font-size: 0.8rem; }
+}
+/* two-column runs: a lone last item spans the row */
+@media (max-width: 899px) { .svc-photos > :last-child:nth-child(odd) { grid-column: 1 / -1; } .svc-photos > :last-child:nth-child(odd) .pfig-img { aspect-ratio: 16 / 9; } }
